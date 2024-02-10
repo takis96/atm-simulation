@@ -1,0 +1,40 @@
+For the implementation of the atm simulation i used Laravel with PHP 8.2.0 and MySQL (MariaDB is also fine)
+I decided on Laravel because it gave me the ability to create secure restful api calls for every action needed on the instructions and I could also easily check them with corresponding tests.
+To run the project you will need to clone the project locally and install PHP 8.2.0,  Composer, MySQL and to create a database. After you make sure you have installed Composer(Laravel), PHP, MySQL(or MariaDB), name the database whatever you want and create a user granting all privileges. Update these fields in .env file with what you've created:
+DB_DATABASE=
+DB_USERNAME=
+DB_PASSWORD=
+After that, you should open the app's route with command line and run the following: 
+php artisan migrate (to migrate to the database the tables needed)
+php artisan serve (to run the application)
+
+To test the actions you requested you can use any suitable interface or POSTMAN
+If you choose POSTMAN (I did also), run the following:
+
+POST: http://localhost:8000/api/initialize with body in form-data key:note_value value:20 and key:quantity - value:(whatever you want) for the initialization. Run it a second time changing the note_value to 50 and quantinty again whatever you want for 50 valued notes.
+
+GET: http://localhost:8000/api/available-notes it will return a json in this form 
+{
+    "notes": [
+        {
+            "note_value": 50,
+            "quantity": 97
+        },
+        {
+            "note_value": 20,
+            "quantity": 97
+        }
+    ]
+}
+
+POST: http://localhost:8000/api/dispense-money with body in form-data key:amount - value:(anything you want to test) it will return a json 
+{
+    "error": "Unable to dispense this amount with available notes"
+} 
+or
+{
+    "message": "Money dispensed successfully"
+}
+depending on the amount you provide. You can also check that it works correclty by trying the previous get api again afterwards.
+
+I have also implemented feature tests for every function implemented in the Controller. You'll find them at Tests/Feature. You can run the tests through command line also with: php artisan test
