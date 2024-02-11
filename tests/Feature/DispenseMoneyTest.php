@@ -11,19 +11,17 @@ class DispenseMoneyTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+
     public function it_dispenses_money_correctly()
     {
-        // Arrange
+        // Initialize ATM notes in the database
         AtmNote::factory()->create(['note_value' => 20, 'quantity' => 100]);
         AtmNote::factory()->create(['note_value' => 50, 'quantity' => 100]);
 
-        // Act
+        // Call the API endpoint to dispense money asked for
         $response1 = $this->postJson('/api/dispense-money', ['amount' => 150]);
         $response2 = $this->postJson('/api/dispense-money', ['amount' => 70]);
 
-
-        // Assert
         $response1->assertStatus(200)
             ->assertJson(['message' => 'Money dispensed successfully']);
         $response2->assertStatus(200)

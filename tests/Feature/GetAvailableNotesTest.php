@@ -31,6 +31,5 @@ class GetAvailableNotesTest extends TestCase
         // Assert that the response contains the expected note values and quantities
         $response->assertJsonFragment(['note_value' => 20, 'quantity' => 100]);
         $response->assertJsonFragment(['note_value' => 50, 'quantity' => 100]);
-        // Add more assertions if necessary
     }
 }
